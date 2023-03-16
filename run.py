@@ -59,13 +59,32 @@ def generate_lesson_plan_and_materials(grade_level, subject, topic, duration, te
     output = response.choices[0].text.strip()
     return output
 
+# ...
+
+def generate_class_materials(grade_level, subject, topic, duration, techniques, complexity, learning_styles, lesson_plan):
+    techniques_str = ', '.join(techniques)
+    learning_styles_str = ', '.join(learning_styles)
+    prompt = f"Based on the following lesson plan for a {complexity} {subject} lesson on '{topic}' for {grade_level} students, create class materials:\n\n{lesson_plan}\n\nThe lesson should be {duration} long and incorporate the following pedagogical techniques: {techniques_str}. It should cater to the following learning styles: {learning_styles_str}. Please provide the class materials."
+    
+    response = openai.Completion.create(
+        engine="text-davinci-002",
+        prompt=prompt,
+        max_tokens=1024,
+        n=1,
+        stop=None,
+        temperature=0.8,
+    )
+
+    output = response.choices[0].text.strip()
+    return output
+
 if st.button("Generate Lesson Plan & Class Materials"):
     if not topic:
         st.error("Please enter a topic.")
     else:
         try:
-            output = generate_lesson_plan_and_materials(grade_level, subject, topic, duration, techniques, complexity, learning_styles)
-            lesson_plan, class_materials = output.split('\n\nClass Materials\n\n')
+            lesson_plan = generate_lesson_plan_and_materials(grade_level, subject, topic, duration, techniques, complexity, learning_styles)
+            class_materials = generate_class_materials(grade_level, subject, topic, duration, techniques, complexity, learning_styles, lesson_plan)
             st.header("Generated Lesson Plan")
             st.write(lesson_plan)
             st.header("Generated Class Materials")

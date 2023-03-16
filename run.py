@@ -12,8 +12,20 @@ st.markdown(
     .main {
         background-color: #f0f0f0;
     }
-    h2 {
+    h1 {
         color: #0080FF;
+    }
+    h2 {
+        color: #0060BF;
+        background-color: #e0e0e0;
+        padding: 10px;
+        border-radius: 10px;
+    }
+    .input_options {
+        background-color: #0080FF;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
     }
 </style>
 """,
@@ -31,35 +43,41 @@ durations = ["30 minutes", "45 minutes", "60 minutes", "90 minutes"]
 complexity_levels = ["Beginner", "Intermediate", "Advanced"]
 
 # Input options
+st.markdown("<h2 class='input_options'>Input Options</h2>", unsafe_allow_html=True)
 cols = st.beta_columns(4)
 grade_level = cols[0].selectbox("Grade Level", options=grade_levels)
 subject = cols[1].selectbox("Subject", options=subjects)
 duration = cols[2].selectbox("Duration", options=durations)
 complexity = cols[3].selectbox("Complexity Level", options=complexity_levels)
-techniques = st.multiselect("Pedagogical Techniques", options=["Bloom's Taxonomy", "Project-Based Learning", "Differentiated Instruction", "Inquiry-Based Learning"])
-learning_styles = st.multiselect("Learning Styles", options=["Visual", "Auditory", "Kinesthetic"])
+techniques = st.multiselect("Pedagogical Techniques", options=["Bloom's Taxonomy", "Project-Based Learning", "Differentiated Instruction", "Inquiry-Based Learning", "Problem-Based Learning", "Flipped Classroom"])
+learning_styles = st.multiselect("Learning Styles", options=["Visual", "Auditory", "Kinesthetic", "Read/Write"])
 
 topic = st.text_input("Topic")
 
 
-def generate_lesson_plan_and_materials(grade_level, subject, topic, duration, techniques, complexity, learning_styles):
-    techniques_str = ', '.join(techniques)
-    learning_styles_str = ', '.join(learning_styles)
-    prompt = f"Create a lesson plan and corresponding class materials for a {complexity} {subject} lesson on '{topic}' for {grade_level} students. The lesson should be {duration} long and incorporate the following pedagogical techniques: {techniques_str}. It should cater to the following learning styles: {learning_styles_str}. Please provide a well-organized lesson plan with a clear hierarchy, sections, and detailed instructions, followed by the class materials."
     
-    response = openai.Completion.create(
-        engine="text-davinci-002",
-        prompt=prompt,
-        max_tokens=2048,
-        n=1,
-        stop=None,
-        temperature=0.8,
-    )
+def generate_lesson_plan_and_materials(grade_level, subject, topic, duration, techniques, complexity, learning_styles):    # Check the length of the transcript
+    
+      # Generate the summary using the OpenAI ChatCompletion API
+      response = openai.ChatCompletion.create(
+          model="gpt-3.5-turbo",
+          messages=[
+              {"role": "system", "content": "You are an all-knowing AI that is extraordinarily creative and a world expert at k-12 teaching/learning. You specialize in creating customized lesson plans that are fun, engaging, and exciting to do. You will be helping write complex but effective lesson plans."},
+              {"role": "user", "content": f"Please Create a lesson plan for a {complexity} {subject} lesson on '{topic}' for grade {grade_level} students. The lesson should be {duration} minutes long and incorporate the following pedagogical techniques: {techniques}. It should cater to the following learning styles: {learning_styles}. Please provide a well-organized lesson plan with a clear hierarchy, sections, and detailed instructions."},
+              {"role": "system", "content": "Absolutely, I will provide a well organized lesson plan that fits this criteria and engages the student in a way that isnt boring, rote, or templated. I will incorporate all known best practices to create the maximally interesting lesson plan."},
+              {"role": "user", "content": "Excellent, please continue and provide the lesson plan."}
+          ],
+          max_tokens=3500,
+          n=1,
+          stop=None,
+          temperature=0.5,
+      )
 
-    output = response.choices[0].text.strip()
-    return output
+      # Extract the generated summary from the response
+      lesson_plan = response['choices'][0]['message']['content']
+      print(lesson_plan)
+      return lesson_plan
 
-# ...
 
 def generate_class_materials(grade_level, subject, topic, duration, techniques, complexity, learning_styles, lesson_plan):
     techniques_str = ', '.join(techniques)
@@ -67,7 +85,7 @@ def generate_class_materials(grade_level, subject, topic, duration, techniques, 
     prompt = f"Based on the following lesson plan for a {complexity} {subject} lesson on '{topic}' for {grade_level} students, create class materials:\n\n{lesson_plan}\n\nThe lesson should be {duration} long and incorporate the following pedagogical techniques: {techniques_str}. It should cater to the following learning styles: {learning_styles_str}. Please provide the class materials."
     
     response = openai.Completion.create(
-        engine="text-davinci-002",
+        engine="text-davinci-003",
         prompt=prompt,
         max_tokens=1024,
         n=1,

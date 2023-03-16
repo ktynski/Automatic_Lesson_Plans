@@ -26,13 +26,60 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+
+
+subject_areas = [
+    "Math",
+    "Science",
+    "English",
+    "History",
+    "Social Studies",
+    "Art",
+    "Music",
+    "Physical Education",
+    "Health",
+    "Computer Science",
+    "Foreign Language",
+    "Environmental Science",
+    "Geography",
+    "Economics",
+    "Psychology",
+    "Philosophy",
+    "Engineering",
+    "Drama/Theater",
+    "Creative Writing",
+]
+
+ped_techniques = [
+    "Bloom's Taxonomy",
+    "Project-Based Learning",
+    "Differentiated Instruction",
+    "Inquiry-Based Learning",
+    "Socratic Method",
+    "Gamification",
+    "Cooperative Learning",
+    "Flipped Classroom",
+    "Problem-Based Learning",
+    "Peer Teaching",
+    "Concept Mapping",
+    "Role-Playing",
+    "Storytelling",
+    "Self-Directed Learning",
+    "Blended Learning",
+    "Microlearning",
+    "Mnemonic Techniques",
+]
+
+
+
+
 st.title("Lesson Plan & Class Materials Generator")
 
 with st.beta_expander("Enter OpenAI API Key", expanded=True):
     openai.api_key = st.text_input("API Key", type="password")
 
 grade_levels = [f"Grade {i}" for i in range(1, 13)] + ["Kindergarten"]
-subjects = ["Math", "Science", "English", "History", "Social Studies"]
+subjects= cols[1].selectbox("Subject", options=subject_areas)
 durations = ["30 minutes", "45 minutes", "60 minutes", "90 minutes"]
 complexity_levels = ["Beginner", "Intermediate", "Advanced"]
 
@@ -43,7 +90,7 @@ grade_level = cols[0].selectbox("Grade Level", options=grade_levels)
 subject = cols[1].selectbox("Subject", options=subjects)
 duration = cols[2].selectbox("Duration", options=durations)
 complexity = cols[3].selectbox("Complexity Level", options=complexity_levels)
-techniques = st.multiselect("Pedagogical Techniques", options=["Bloom's Taxonomy", "Project-Based Learning", "Differentiated Instruction", "Inquiry-Based Learning"])
+techniques = st.multiselect("Pedagogical Techniques", options=ped_techniques)
 learning_styles = st.multiselect("Learning Styles", options=["Visual", "Auditory", "Kinesthetic"])
 
 st.markdown("### Enter Topic")

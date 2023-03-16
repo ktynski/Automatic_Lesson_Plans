@@ -39,6 +39,8 @@ complexity = cols[3].selectbox("Complexity Level", options=complexity_levels)
 techniques = st.multiselect("Pedagogical Techniques", options=["Bloom's Taxonomy", "Project-Based Learning", "Differentiated Instruction", "Inquiry-Based Learning"])
 learning_styles = st.multiselect("Learning Styles", options=["Visual", "Auditory", "Kinesthetic"])
 
+topic = st.text_input("Topic")
+
 
 def generate_lesson_plan_and_materials(grade_level, subject, topic, duration, techniques, complexity, learning_styles):
     techniques_str = ', '.join(techniques)

@@ -87,7 +87,7 @@ complexity_levels = ["Beginner", "Intermediate", "Advanced"]
 st.markdown("### Select Options")
 cols = st.beta_columns(4)
 grade_level = cols[0].selectbox("Grade Level", options=grade_levels)
-subject = cols[1].selectbox("Subject", options=subjects)
+subject = cols[1].selectbox("Subject", options=subject_areas)
 duration = cols[2].selectbox("Duration", options=durations)
 complexity = cols[3].selectbox("Complexity Level", options=complexity_levels)
 techniques = st.multiselect("Pedagogical Techniques", options=ped_techniques)

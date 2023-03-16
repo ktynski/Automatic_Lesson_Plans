@@ -36,6 +36,10 @@ subjects = ["Math", "Science", "English", "History", "Social Studies"]
 durations = ["30 minutes", "45 minutes", "60 minutes", "90 minutes"]
 complexity_levels = ["Beginner", "Intermediate", "Advanced"]
 
+# Input options
+st.markdown("### Select Options")
+cols = st.beta_columns(4)
+grade_level = cols[0].selectbox("Grade Level", options=grade_levels)
 subject = cols[1].selectbox("Subject", options=subjects)
 duration = cols[2].selectbox("Duration", options=durations)
 complexity = cols[3].selectbox("Complexity Level", options=complexity_levels)
@@ -44,8 +48,6 @@ learning_styles = st.multiselect("Learning Styles", options=["Visual", "Auditory
 
 st.markdown("### Enter Topic")
 topic = st.text_input("Topic")
-
-
 
     
 def generate_lesson_plan_and_materials(grade_level, subject, topic, duration, techniques, complexity, learning_styles):    # Check the length of the transcript

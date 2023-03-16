@@ -2,7 +2,7 @@ import openai
 import os
 import streamlit as st
 
-# Custom color scheme
+# Custom color scheme and styles
 st.markdown(
     """
 <style>
@@ -15,17 +15,11 @@ st.markdown(
     h1 {
         color: #0080FF;
     }
-    h2 {
-        color: #0060BF;
-        background-color: #e0e0e0;
-        padding: 10px;
-        border-radius: 10px;
-    }
-    .input_options {
+    .stButton>button {
         background-color: #0080FF;
-        color: white;
-        padding: 10px;
-        border-radius: 5px;
+    }
+    .expanderHeader {
+        font-weight: bold;
     }
 </style>
 """,
@@ -34,7 +28,7 @@ st.markdown(
 
 st.title("Lesson Plan & Class Materials Generator")
 
-with st.beta_expander("Enter OpenAI API Key"):
+with st.beta_expander("Enter OpenAI API Key", expanded=True):
     openai.api_key = st.text_input("API Key", type="password")
 
 grade_levels = [f"Grade {i}" for i in range(1, 13)] + ["Kindergarten"]
@@ -42,17 +36,15 @@ subjects = ["Math", "Science", "English", "History", "Social Studies"]
 durations = ["30 minutes", "45 minutes", "60 minutes", "90 minutes"]
 complexity_levels = ["Beginner", "Intermediate", "Advanced"]
 
-# Input options
-st.markdown("<h2 class='input_options'>Input Options</h2>", unsafe_allow_html=True)
-cols = st.beta_columns(4)
-grade_level = cols[0].selectbox("Grade Level", options=grade_levels)
 subject = cols[1].selectbox("Subject", options=subjects)
 duration = cols[2].selectbox("Duration", options=durations)
 complexity = cols[3].selectbox("Complexity Level", options=complexity_levels)
-techniques = st.multiselect("Pedagogical Techniques", options=["Bloom's Taxonomy", "Project-Based Learning", "Differentiated Instruction", "Inquiry-Based Learning", "Problem-Based Learning", "Flipped Classroom"])
-learning_styles = st.multiselect("Learning Styles", options=["Visual", "Auditory", "Kinesthetic", "Read/Write"])
+techniques = st.multiselect("Pedagogical Techniques", options=["Bloom's Taxonomy", "Project-Based Learning", "Differentiated Instruction", "Inquiry-Based Learning"])
+learning_styles = st.multiselect("Learning Styles", options=["Visual", "Auditory", "Kinesthetic"])
 
+st.markdown("### Enter Topic")
 topic = st.text_input("Topic")
+
 
 
     

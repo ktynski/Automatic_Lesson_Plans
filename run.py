@@ -79,11 +79,9 @@ with st.beta_expander("Enter OpenAI API Key", expanded=True):
     openai.api_key = st.text_input("API Key", type="password")
 
 grade_levels = [f"Grade {i}" for i in range(1, 13)] + ["Kindergarten"]
-subjects= cols[1].selectbox("Subject", options=subject_areas)
 durations = ["30 minutes", "45 minutes", "60 minutes", "90 minutes"]
 complexity_levels = ["Beginner", "Intermediate", "Advanced"]
 
-# Input options
 # Input options
 st.markdown("### Select Options")
 cols = st.beta_columns(4)
@@ -96,6 +94,7 @@ learning_styles = st.multiselect("Learning Styles", options=["Visual", "Auditory
 
 st.markdown("### Enter Topic")
 topic = st.text_input("Topic")
+
 
 
     

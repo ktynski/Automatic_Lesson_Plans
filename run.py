@@ -90,7 +90,7 @@ subject = cols[1].selectbox("Subject", options=subject_areas)
 duration = cols[2].selectbox("Duration", options=durations)
 complexity = cols[3].selectbox("Complexity Level", options=complexity_levels)
 techniques = st.multiselect("Pedagogical Techniques", options=ped_techniques)
-learning_styles = st.multiselect("Learning Styles", options=["Visual", "Auditory", "Kinesthetic", "Logical (Mathematical)","Verbal (Linguistic)","Interpersonal (Social)","Intrapersonal (Self-Reflective)","Naturalistic","Existential","])
+learning_styles = st.multiselect("Learning Styles", options=["Visual", "Auditory", "Kinesthetic", "Logical (Mathematical)","Verbal (Linguistic)","Interpersonal (Social)","Intrapersonal (Self-Reflective)","Naturalistic","Existential"])
 
 st.markdown("### Enter Topic")
 topic = st.text_input("Topic")

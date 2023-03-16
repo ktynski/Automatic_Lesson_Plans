@@ -22,9 +22,8 @@ st.markdown(
 
 st.title("Lesson Plan & Class Materials Generator")
 
-with st.sidebar:
-    st.header("API Key")
-    openai.api_key = st.text_input("Enter your OpenAI API Key", type="password")
+with st.beta_expander("Enter OpenAI API Key"):
+    openai.api_key = st.text_input("API Key", type="password")
 
 grade_levels = [f"Grade {i}" for i in range(1, 13)] + ["Kindergarten"]
 subjects = ["Math", "Science", "English", "History", "Social Studies"]
@@ -39,6 +38,7 @@ duration = cols[2].selectbox("Duration", options=durations)
 complexity = cols[3].selectbox("Complexity Level", options=complexity_levels)
 techniques = st.multiselect("Pedagogical Techniques", options=["Bloom's Taxonomy", "Project-Based Learning", "Differentiated Instruction", "Inquiry-Based Learning"])
 learning_styles = st.multiselect("Learning Styles", options=["Visual", "Auditory", "Kinesthetic"])
+
 
 def generate_lesson_plan_and_materials(grade_level, subject, topic, duration, techniques, complexity, learning_styles):
     techniques_str = ', '.join(techniques)
